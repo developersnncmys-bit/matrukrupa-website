@@ -667,7 +667,7 @@ export const recentlyViewedProducts = [
 
 export const footerLinks = {
   siteInfo: [
-    "About Matru Kripa Enterprise",
+    "About Miracle Mind",
     "Help & Support",
     "FAQs",
     "Buying Guide",

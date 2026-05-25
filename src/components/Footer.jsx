@@ -7,7 +7,7 @@ const ROUTE_BY_ITEM = {
   "Franchise Opportunity": "/franchise",
   "Store Locator": "/find-in-stores",
   Careers: "/careers",
-  "About Matru Kripa Enterprise": "/about",
+  "About Miracle Mind": "/about",
 };
 
 const FacebookIcon = () => (
@@ -125,7 +125,7 @@ export default function Footer() {
       <div className="footer__bottom">
         <div className="container">
           <p className="footer__copy">
-            © Copyright 2025 Matru Kripa Enterprises. All rights reserved
+            © Copyright 2025 Miracle Mind. All rights reserved
           </p>
         </div>
       </div>

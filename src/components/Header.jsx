@@ -222,7 +222,7 @@ export default function Header() {
         <div className="header__main-inner container">
           {/* Logo */}
           <div className="header__logo" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-            <span className="header__logo-text">Matru Krupa Enterprise</span>
+            <span className="header__logo-text">MIRACLE MIND</span>
           </div>
 
           {/* Nav Controls */}

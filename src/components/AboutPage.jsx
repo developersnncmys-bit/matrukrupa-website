@@ -35,14 +35,14 @@ export default function AboutPage() {
           Home
         </span>
         <span className="breadcrumb__sep">&gt;</span>
-        <span className="breadcrumb__current">About Matru Kripa Enterprise</span>
+        <span className="breadcrumb__current">About Miracle Mind</span>
       </div>
 
       {/* Hero */}
       <section className="ab-hero">
         <div className="container ab-hero__inner">
           <div className="ab-hero__content">
-            <span className="ab-hero__eyebrow">About Matru Kripa</span>
+            <span className="ab-hero__eyebrow">About Miracle Mind</span>
             <h1 className="ab-hero__title">
               Trusted Electronics &amp;{" "}
               <span className="ab-hero__title-accent">Home Solutions</span>{" "}
@@ -93,7 +93,7 @@ export default function AboutPage() {
       {/* Intro */}
       <section className="ab-intro container">
         <p>
-          Matru Kripa Enterprises is a growing retail brand specializing in
+          Miracle Mind is a growing retail brand specializing in
           electronics and home appliances committed to delivering quality
           products, reliable service, and a seamless shopping experience both
           online and in-store.
@@ -170,7 +170,7 @@ export default function AboutPage() {
           <h2 className="ab-card__title">Growing Together</h2>
           <div className="ab-card__body">
             <p>
-              At Matru Kripa Enterprises, we believe growth is strongest when
+              At Miracle Mind, we believe growth is strongest when
               built together — with customers, partners, and teams. Whether
               you're shopping for your home, starting a franchise, or building
               a career, we're here to support you every step of the way.
