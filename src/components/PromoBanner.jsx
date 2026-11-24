@@ -1,26 +1,52 @@
+import { useState, useEffect } from "react";
+import { storeApi } from "../services/api";
+
 export default function PromoBanner() {
+  const [promo, setPromo] = useState(null);
+
+  useEffect(() => {
+    storeApi
+      .getBanners("promo")
+      .then((data) => {
+        const list = Array.isArray(data) ? data : data?.banners || [];
+        if (list.length > 0) setPromo(list[0]);
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!promo) return null;
+
   return (
-    <section className="promo-banner">
+    <section
+      className="promo-banner"
+      style={promo.bgColor ? { background: promo.bgColor } : undefined}
+    >
       <div className="promo-banner__inner container">
         <div className="promo-banner__text">
-          <h2 className="promo-banner__title">Unleash Your Power</h2>
-          <p className="promo-banner__sub">
-            Exclusive offers on premium devices
-          </p>
-          <p className="promo-banner__price">Starting at ₹32,999</p>
-          <button className="promo-banner__btn">Buy now</button>
+          <h2 className="promo-banner__title">{promo.title}</h2>
+          {promo.subtitle && (
+            <p className="promo-banner__sub">{promo.subtitle}</p>
+          )}
+          {promo.buttonText && (
+            <button
+              className="promo-banner__btn"
+              onClick={() => {
+                if (promo.link) window.location.href = promo.link;
+              }}
+            >
+              {promo.buttonText}
+            </button>
+          )}
         </div>
-        <div className="promo-banner__visuals">
-          <div className="promo-banner__device promo-banner__device--back">
-            <span>💻</span>
+        {promo.image && (
+          <div className="promo-banner__visuals">
+            <img
+              src={promo.image}
+              alt={promo.title}
+              className="promo-banner__img"
+            />
           </div>
-          <div className="promo-banner__device promo-banner__device--mid">
-            <span>🖥️</span>
-          </div>
-          <div className="promo-banner__device promo-banner__device--front">
-            <span>📱</span>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

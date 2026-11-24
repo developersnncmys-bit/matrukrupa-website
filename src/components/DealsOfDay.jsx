@@ -1,6 +1,28 @@
-import { deals } from "../data/products";
+import { useState, useEffect } from "react";
+import { storeApi } from "../services/api";
 
 export default function DealsOfDay() {
+  const [deals, setDeals] = useState([]);
+
+  useEffect(() => {
+    storeApi
+      .getBanners("deal")
+      .then((data) => {
+        const list = Array.isArray(data) ? data : data?.banners || [];
+        setDeals(
+          list.map((b) => ({
+            id: b._id,
+            title: b.title,
+            badge: b.subtitle || b.buttonText || "",
+            image: b.image,
+          })),
+        );
+      })
+      .catch(() => {});
+  }, []);
+
+  if (deals.length === 0) return null;
+
   return (
     <section className="deals-day section-pad--sm">
       <div className="container">

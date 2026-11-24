@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { categories as staticCategories } from "../data/products";
 import { storeApi } from "../services/api";
 
 export default function Categories() {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState(staticCategories);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     storeApi.getCategories()
@@ -23,12 +22,14 @@ export default function Categories() {
       .catch(() => {});
   }, []);
 
+  if (categories.length === 0) return null;
+
   return (
     <section className="categories section-pad">
       <div className="container">
         <h2 className="section-title">Our Top Categories</h2>
         <div className="categories__grid">
-          {categories.filter((cat) => cat.name?.toLowerCase().includes("tele")).map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat.id}
               className="category-card"

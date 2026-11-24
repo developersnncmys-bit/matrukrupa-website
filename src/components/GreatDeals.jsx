@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import { greatDeals } from "../data/products";
 import { useCarousel } from "../hooks/useCarousel";
 
 function useResponsiveCount(defaultCount) {
@@ -20,12 +19,14 @@ function useResponsiveCount(defaultCount) {
   return count;
 }
 
-export default function GreatDeals() {
+export default function GreatDeals({ items = [] }) {
   const visibleCount = 4;
   const effective = useResponsiveCount(visibleCount);
-  const total = Math.max(0, greatDeals.length - effective + 1);
+  const total = Math.max(0, items.length - effective + 1);
   const { current, next, prev, reset } = useCarousel(total, false);
   const touchStart = useRef(null);
+
+  if (items.length === 0) return null;
 
   const canPrev = current > 0;
   const canNext = current < total - 1;
@@ -81,7 +82,7 @@ export default function GreatDeals() {
             className="gd-carousel__track"
             style={{ transform: `translateX(-${current * (100 / effective)}%)` }}
           >
-            {greatDeals.map((item) => (
+            {items.map((item) => (
               <div
                 key={item.id}
                 className="gd-card"

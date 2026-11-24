@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import Header from "./components/Header";
@@ -22,18 +23,44 @@ import FranchiseOpportunity from "./components/FranchiseOpportunity";
 import HelpSupport from "./components/Help&Support";
 import Careers from "./components/Careers";
 import AboutPage from "./components/AboutPage";
-import { hiddenDeals, whatsHot } from "./data/products";
+import { storeApi } from "./services/api";
+import { mapProductToCard } from "./utils/productMapper";
 
 function HomePage() {
+  const [greatDealsItems, setGreatDealsItems] = useState([]);
+  const [hiddenDealsItems, setHiddenDealsItems] = useState([]);
+  const [whatsHotItems, setWhatsHotItems] = useState([]);
+
+  useEffect(() => {
+    storeApi
+      .getProducts({ limit: 30 })
+      .then((data) => {
+        const products = Array.isArray(data) ? data : data?.products || [];
+        const byDiscount = [...products].sort((a, b) => {
+          const dA = (a.originalPrice || a.price) - a.price;
+          const dB = (b.originalPrice || b.price) - b.price;
+          return dB - dA;
+        });
+        setGreatDealsItems(byDiscount.slice(0, 6).map(mapProductToCard));
+        setWhatsHotItems(byDiscount.slice(0, 8).map(mapProductToCard));
+        setHiddenDealsItems(byDiscount.slice(8, 16).map(mapProductToCard));
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <>
       <HeroSlider />
       <Categories />
       <DealsOfDay />
-      <GreatDeals />
-      <ProductCarousel title="Hidden Deals Inside" items={hiddenDeals} visibleCount={4} navigateTo="/product" />
+      {greatDealsItems.length > 0 && <GreatDeals items={greatDealsItems} />}
+      {hiddenDealsItems.length > 0 && (
+        <ProductCarousel title="Hidden Deals Inside" items={hiddenDealsItems} visibleCount={4} navigateTo="/product" />
+      )}
       <PromoBanner />
-      <ProductCarousel title="What's Hot" items={whatsHot} visibleCount={4} cardStyle="floating" />
+      {whatsHotItems.length > 0 && (
+        <ProductCarousel title="What's Hot" items={whatsHotItems} visibleCount={4} cardStyle="floating" />
+      )}
     </>
   );
 }

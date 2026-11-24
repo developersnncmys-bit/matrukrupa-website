@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { heroSlides } from "../data/products";
 import { storeApi } from "../services/api";
 import { useCarousel } from "../hooks/useCarousel";
 
@@ -9,7 +8,7 @@ function mapBannerToSlide(b) {
     id: b._id,
     title: b.title,
     subtitle: b.subtitle,
-    cta: b.ctaText || "Shop Now",
+    cta: b.buttonText || "Shop Now",
     theme: b.theme || "dark",
     accent: b.accentColor || "#111",
     bg: b.bgColor || "#f5f5f5",
@@ -18,7 +17,7 @@ function mapBannerToSlide(b) {
 }
 
 export default function HeroSlider() {
-  const [slides, setSlides] = useState(heroSlides);
+  const [slides, setSlides] = useState([]);
 
   useEffect(() => {
     storeApi.getBanners("hero")
@@ -29,7 +28,9 @@ export default function HeroSlider() {
       .catch(() => {});
   }, []);
 
-  const { current, next, prev, goTo, reset } = useCarousel(slides.length, true, 4500);
+  const { current, next, prev, goTo, reset } = useCarousel(slides.length, slides.length > 0, 4500);
+
+  if (slides.length === 0) return null;
 
   return (
     <>
